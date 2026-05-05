@@ -1,5 +1,5 @@
 
-# 🚦 Traffic Sign Recognition System
+# 🚦 Traffic Sign Classification System
 
 A production-grade web application that uses a **Convolutional Neural Network (CNN)** to classify traffic signs from uploaded images — built with **Flask**, **TensorFlow/Keras**, and a polished glassmorphism UI.
 
