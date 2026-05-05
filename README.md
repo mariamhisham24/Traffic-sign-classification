@@ -28,7 +28,7 @@ traffic-sign-app/
 │
 ├── app.py                  # Flask backend – routes, model loading, inference
 │
-├── model.keras             # ← Place your trained model here
+├── model.keras             
 │
 ├── templates/
 │   └── index.html          # Single-page Jinja2 template
@@ -65,13 +65,7 @@ source venv/bin/activate        # Windows: venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-### 4. Add your model
 
-Copy your trained Keras model file to the project root and name it **`model.keras`**:
-
-```bash
-cp /path/to/your/trained_model.keras ./model.keras
-```
 
 > **Model not ready yet?** The app runs in **demo mode** — it returns random predictions so you can verify the UI works correctly without a real model.
 
@@ -94,17 +88,7 @@ Open **http://localhost:5000** in your browser.
 | Normalisation | Pixel values divided by 255 → `[0.0, 1.0]` |
 | Output | Softmax vector of length **43** |
 
-### Adjusting image size
-If your model uses a different input resolution, update `IMG_SIZE` in `app.py`:
 
-```python
-IMG_SIZE = (64, 64)   # or (48, 48), (224, 224), etc.
-```
-
-### Adjusting class names
-The default class list matches the **GTSRB (German Traffic Sign Recognition Benchmark)** dataset (43 classes). If your model was trained on a different set, replace the `CLASS_NAMES` list in `app.py`.
-
----
 
 ## 🧱 Tech Stack
 
@@ -175,23 +159,7 @@ Effects
 
 ---
 
-## ⚙️ Configuration Reference
 
-All tunable constants live at the top of `app.py`:
-
-```python
-MODEL_PATH  = "model.keras"    # path to your model file
-IMG_SIZE    = (32, 32)         # resize target before inference
-CLASS_NAMES = [...]            # list of human-readable class labels
-```
-
-And in `app.py` Flask config:
-
-```python
-app.config["MAX_CONTENT_LENGTH"] = 8 * 1024 * 1024  # 8 MB upload limit
-```
-
----
 
 ## 🐳 Docker (optional)
 
@@ -221,11 +189,6 @@ docker run -p 5000:5000 traffic-sign-app
 
 ---
 
-## 📄 License
-
-MIT — free to use, modify, and distribute.
-
----
 
 ## 🙏 Acknowledgements
 
