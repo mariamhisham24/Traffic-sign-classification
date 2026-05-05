@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Traffic Sign Recognition System</title>
+
+  <!-- Google Fonts: Syne (display) + DM Sans (body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
+
+  <!-- Phosphor Icons (lightweight SVG icon set) -->
+  <script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js"></script>
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+</head>
+
+<body>
+
+  <!-- ── Dark-mode toggle ─────────────────────────────────────────────────── -->
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+    <i class="ph ph-moon" id="themeIcon"></i>
+  </button>
+
+  <!-- ── Decorative background blobs ─────────────────────────────────────── -->
+  <div class="bg-blob blob-1" aria-hidden="true"></div>
+  <div class="bg-blob blob-2" aria-hidden="true"></div>
+  <div class="bg-blob blob-3" aria-hidden="true"></div>
+
+  <!-- ══════════════════════════════════════════════════════════════════════ -->
+  <!--  MAIN WRAPPER                                                          -->
+  <!-- ══════════════════════════════════════════════════════════════════════ -->
+  <main class="wrapper">
+
+    <!-- ── Header ─────────────────────────────────────────────────────────── -->
+    <header class="app-header">
+      <div class="header-badge">
+        <i class="ph ph-traffic-sign"></i>
+        AI-Powered
+      </div>
+      <h1 class="app-title">Traffic Sign<br /><span class="accent-text">Recognition</span> System</h1>
+      <p class="app-subtitle">Upload a traffic sign image and let our CNN model identify it in milliseconds</p>
+    </header>
+
+    <!-- ── Upload card ─────────────────────────────────────────────────────── -->
+    <section class="card upload-card" id="uploadSection">
+      <form id="uploadForm" enctype="multipart/form-data">
+
+        <!-- Drop zone -->
+        <div class="drop-zone" id="dropZone" role="button" tabindex="0" aria-label="Upload image area">
+          <div class="drop-zone__inner" id="dropZoneInner">
+            <div class="drop-icon-wrap">
+              <i class="ph ph-cloud-arrow-up drop-icon"></i>
+            </div>
+            <p class="drop-primary">Drag &amp; drop your image here</p>
+            <p class="drop-secondary">— or —</p>
+            <label class="btn btn-upload" for="fileInput">
+              <i class="ph ph-image-square"></i>
+              Browse Image
+            </label>
+            <input type="file" id="fileInput" name="image" accept="image/png,image/jpeg,image/bmp,image/webp" hidden />
+            <p class="drop-hint">PNG · JPG · BMP · WebP &nbsp;|&nbsp; Max 8 MB</p>
+          </div>
+
+          <!-- Preview (hidden until image selected) -->
+          <div class="drop-zone__preview" id="previewWrap" hidden>
+            <img id="previewImg" src="" alt="Selected image preview" />
+            <button type="button" class="btn-clear" id="clearBtn" aria-label="Remove image">
+              <i class="ph ph-x-circle"></i>
+            </button>
+            <p class="preview-filename" id="previewFilename"></p>
+          </div>
+        </div>
+
+        <!-- Error banner -->
+        <div class="error-banner" id="errorBanner" hidden role="alert">
+          <i class="ph ph-warning-circle"></i>
+          <span id="errorText"></span>
+        </div>
+
+        <!-- Submit -->
+        <button type="submit" class="btn btn-predict" id="predictBtn" disabled>
+          <span class="btn-label">
+            <i class="ph ph-brain"></i>
+            Classify Sign
+          </span>
+          <span class="btn-spinner" hidden>
+            <span class="spinner"></span>
+            Analysing…
+          </span>
+        </button>
+
+      </form>
+    </section><!-- /upload-card -->
+
+    <!-- ── Results card (hidden until prediction returns) ─────────────────── -->
+    <section class="card results-card" id="resultsSection" hidden>
+
+      <div class="results-grid">
+
+        <!-- Left: image -->
+        <div class="result-image-wrap">
+          <img id="resultImg" src="" alt="Classified traffic sign" />
+          <div class="result-image-badge">
+            <i class="ph ph-check-circle"></i> Classified
+          </div>
+        </div>
+
+        <!-- Right: details -->
+        <div class="result-details">
+          <p class="result-label">Predicted Sign</p>
+          <h2 class="result-class" id="resultClass">—</h2>
+
+          <div class="confidence-block">
+            <div class="confidence-header">
+              <span>Confidence</span>
+              <span class="confidence-pct" id="confidencePct">0%</span>
+            </div>
+            <div class="confidence-bar-bg">
+              <div class="confidence-bar-fill" id="confidenceBar" style="width:0%"></div>
+            </div>
+          </div>
+
+          <!-- Top-5 predictions -->
+          <div class="top5-block">
+            <p class="top5-title"><i class="ph ph-chart-bar"></i> Top-5 Predictions</p>
+            <ul class="top5-list" id="top5List"></ul>
+          </div>
+
+          <button class="btn btn-reset" id="resetBtn">
+            <i class="ph ph-arrow-counter-clockwise"></i>
+            Try Another Image
+          </button>
+        </div>
+
+      </div>
+    </section><!-- /results-card -->
+
+    <!-- ── Footer ─────────────────────────────────────────────────────────── -->
+    <footer class="app-footer">
+      <p>Built with <i class="ph ph-heart-straight" style="color:#f87171;vertical-align:-2px"></i> using TensorFlow &amp; Flask &nbsp;·&nbsp; CNN Model trained on GTSRB dataset</p>
+    </footer>
+
+  </main><!-- /wrapper -->
+
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
