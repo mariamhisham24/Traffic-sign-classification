@@ -22,9 +22,8 @@ app.config["MAX_CONTENT_LENGTH"] = 8 * 1024 * 1024   # 8 MB upload limit
 ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg", "bmp", "webp"}
 
 # ── Model configuration ──────────────────────────────────────────────────────
-MODEL_PATH = r"C:\Users\Admin\Downloads\Traffic_sign_classification_app\model.keras"          # place your model file here
-IMG_SIZE   = (32, 32)               # resize target – adjust if your model differs
-
+MODEL_PATH = r"C:\Users\Admin\Downloads\Traffic_sign_classification_app\model.keras"         
+IMG_SIZE   = (32, 32)              
 # German Traffic Sign Recognition Benchmark (GTSRB) class names
 CLASS_NAMES = [
     "Speed limit (20km/h)",   "Speed limit (30km/h)",   "Speed limit (50km/h)",
